@@ -5,5 +5,6 @@ public enum OrderStatus {
 	DRINKS,
 	FIRST_COURSE,
 	SECOND_COURSE,
-	DESSERT;
+	DESSERT,
+	COMPLETED;
 }

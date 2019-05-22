@@ -5,6 +5,7 @@ public class Order {
 	private final int ID;
 	private final int type;
 	private int status;
+	private int priority;
 	private Starter starter;
 	private FirstCourse firstCourse;
 	private SecondCourse secondCourse;
