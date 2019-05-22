@@ -3,8 +3,8 @@ package com.bin;
 public class Order {
 	
 	private final int ID;
-	private final int type;
-	private int status;
+	private final OrderType type;
+	private OrderStatus status;
 	private int priority;
 	private Starter starter;
 	private FirstCourse firstCourse;
@@ -12,7 +12,7 @@ public class Order {
 	private Dessert dessert;
 	private Drink drink;
 	
-	public Order(int id, int type, int status, Starter starter, FirstCourse firstCourse,
+	public Order(int id, OrderType type, OrderStatus status, Starter starter, FirstCourse firstCourse,
 			SecondCourse secondCourse, Dessert dessert, Drink drink) {
 		this.ID = id;
 		this.type = type;
@@ -24,12 +24,20 @@ public class Order {
 		this.drink = drink;
 	}
 
-	public int getStatus() {
+	public OrderStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(OrderStatus status) {
 		this.status = status;
+	}
+
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
 	}
 
 	public Starter getStarter() {
@@ -76,8 +84,15 @@ public class Order {
 		return ID;
 	}
 
-	public int getType() {
+	public OrderType getType() {
 		return type;
+	}
+
+	@Override
+	public String toString() {
+		return "Order [ID=" + ID + ", type=" + type + ", status=" + status + ", priority=" + priority + ", starter="
+				+ starter + ", firstCourse=" + firstCourse + ", secondCourse=" + secondCourse + ", dessert=" + dessert
+				+ ", drink=" + drink + "]";
 	}
 	
 }

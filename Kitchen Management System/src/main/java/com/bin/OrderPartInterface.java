@@ -11,5 +11,6 @@ public interface OrderPartInterface {
 	 * @return The order ID
 	 */
 	int getOrderID();
-
+	
+	String toString();
 }

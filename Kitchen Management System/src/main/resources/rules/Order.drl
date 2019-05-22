@@ -1,0 +1,21 @@
+//created on: 22-mag-2019
+package com.bin
+
+//list any import classes here.
+
+
+
+//declare any global variables here
+
+
+
+
+rule "PrintAllOrders"
+
+    when
+        order: Order()
+    then
+        System.out.println("Order: "+order.toString());
+
+end
+

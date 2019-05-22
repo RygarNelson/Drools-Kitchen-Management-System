@@ -21,4 +21,9 @@ public class FirstCourse implements OrderPartInterface {
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+	@Override
+	public String toString() {
+		return "FirstCourse [content=" + content + ", orderID=" + orderID + "]";
+	}
 }

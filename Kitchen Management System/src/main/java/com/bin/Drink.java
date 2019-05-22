@@ -21,4 +21,9 @@ public class Drink implements OrderPartInterface {
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+	@Override
+	public String toString() {
+		return "Drink [content=" + content + ", orderID=" + orderID + "]";
+	}
 }

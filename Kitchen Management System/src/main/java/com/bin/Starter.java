@@ -21,4 +21,10 @@ public class Starter implements OrderPartInterface {
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+	@Override
+	public String toString() {
+		return "Starter [content=" + content + ", orderID=" + orderID + "]";
+	}
+	
 }

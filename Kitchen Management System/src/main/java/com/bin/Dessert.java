@@ -21,4 +21,9 @@ public class Dessert implements OrderPartInterface {
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+	@Override
+	public String toString() {
+		return "Dessert [content=" + content + ", orderID=" + orderID + "]";
+	}
 }
