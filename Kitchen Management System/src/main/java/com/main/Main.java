@@ -14,7 +14,7 @@ public class Main {
 	        KieServices ks = KieServices.Factory.get();
     	    KieContainer kContainer = ks.getKieClasspathContainer();
         	KieSession kSession = kContainer.newKieSession("ksession-rules");
-
+        	
             // go !
         	//Order creation
     		int iDOrder1 = 0;
@@ -33,6 +33,9 @@ public class Main {
     				new Drink(iDOrder2, "Water"));
             kSession.insert(order1);
             kSession.insert(order2);
+            Timer timer1 = new Timer(1, 2000);
+            timer1.run();
+            kSession.insert(timer1);
             kSession.fireAllRules();
         } catch (Throwable t) {
             t.printStackTrace();

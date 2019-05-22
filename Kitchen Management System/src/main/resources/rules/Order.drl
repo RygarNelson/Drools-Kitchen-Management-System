@@ -19,3 +19,9 @@ rule "PrintAllOrders"
 
 end
 
+rule "TimerExpired"
+	when
+		Timer(expired == true)
+	then
+		System.out.println("Timer expired");
+end
