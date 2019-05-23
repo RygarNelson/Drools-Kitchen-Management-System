@@ -21,7 +21,7 @@ end
 
 rule "TimerExpired"
 	when
-		Timer(expired == true)
+		order: Order(timer.expired == true)
 	then
-		System.out.println("Timer expired");
+		System.out.println("Timer of order "+order.getID()+" has been expired");
 end

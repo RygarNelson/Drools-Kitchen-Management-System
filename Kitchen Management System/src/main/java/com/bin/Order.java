@@ -11,9 +11,10 @@ public class Order {
 	private SecondCourse secondCourse;
 	private Dessert dessert;
 	private Drink drink;
+	private Timer timer;
 	
 	public Order(int id, OrderType type, OrderStatus status, Starter starter, FirstCourse firstCourse,
-			SecondCourse secondCourse, Dessert dessert, Drink drink) {
+			SecondCourse secondCourse, Dessert dessert, Drink drink, int timeExpected) {
 		this.ID = id;
 		this.type = type;
 		this.status = status;
@@ -22,6 +23,7 @@ public class Order {
 		this.secondCourse = secondCourse;
 		this.dessert = dessert;
 		this.drink = drink;
+		this.timer = new Timer(id, timeExpected);
 	}
 
 	public OrderStatus getStatus() {
@@ -84,15 +86,24 @@ public class Order {
 		return ID;
 	}
 
+	/**
+	 * Since the timer is a static object, I don't need to change it,
+	 * so I will not write the setter
+	 * @return The timer object associated to the order
+	 */
 	public OrderType getType() {
 		return type;
+	}
+	
+	public Timer getTimer() {
+		return timer;
 	}
 
 	@Override
 	public String toString() {
 		return "Order [ID=" + ID + ", type=" + type + ", status=" + status + ", priority=" + priority + ", starter="
 				+ starter + ", firstCourse=" + firstCourse + ", secondCourse=" + secondCourse + ", dessert=" + dessert
-				+ ", drink=" + drink + "]";
+				+ ", drink=" + drink +"]";
 	}
 	
 }
