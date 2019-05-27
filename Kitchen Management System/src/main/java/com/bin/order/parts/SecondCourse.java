@@ -1,11 +1,13 @@
-package com.bin;
+package com.bin.order.parts;
 
-public class FirstCourse implements OrderPartInterface {
+import com.bin.interfaces.OrderPartInterface;
+
+public class SecondCourse implements OrderPartInterface {
 	
 	private String content;
 	private int orderID;
 	
-	public FirstCourse(int orderID, String content) {
+	public SecondCourse(int orderID, String content) {
 		this.orderID = orderID;
 		this.content = content;
 	}
@@ -24,6 +26,7 @@ public class FirstCourse implements OrderPartInterface {
 
 	@Override
 	public String toString() {
-		return "FirstCourse [content=" + content + ", orderID=" + orderID + "]";
+		return "SecondCourse [content=" + content + ", orderID=" + orderID + "]";
 	}
+	
 }

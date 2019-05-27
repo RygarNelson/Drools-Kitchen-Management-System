@@ -1,4 +1,4 @@
-package com.bin;
+package com.bin.enumerators;
 
 public enum OrderStatus {
 	ORDERED,

@@ -1,5 +1,13 @@
 package com.bin;
 
+import com.bin.enumerators.OrderStatus;
+import com.bin.enumerators.OrderType;
+import com.bin.order.parts.Dessert;
+import com.bin.order.parts.Drink;
+import com.bin.order.parts.FirstCourse;
+import com.bin.order.parts.SecondCourse;
+import com.bin.order.parts.Starter;
+
 public class Order {
 	
 	private final int ID;

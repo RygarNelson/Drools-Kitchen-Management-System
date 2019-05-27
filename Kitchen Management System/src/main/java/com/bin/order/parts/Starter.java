@@ -1,11 +1,13 @@
-package com.bin;
+package com.bin.order.parts;
 
-public class Dessert implements OrderPartInterface {
+import com.bin.interfaces.OrderPartInterface;
+
+public class Starter implements OrderPartInterface {
 	
 	private String content;
 	private int orderID;
 	
-	public Dessert(int orderID, String content) {
+	public Starter(int orderID, String content) {
 		this.orderID = orderID;
 		this.content = content;
 	}
@@ -24,6 +26,7 @@ public class Dessert implements OrderPartInterface {
 
 	@Override
 	public String toString() {
-		return "Dessert [content=" + content + ", orderID=" + orderID + "]";
+		return "Starter [content=" + content + ", orderID=" + orderID + "]";
 	}
+	
 }

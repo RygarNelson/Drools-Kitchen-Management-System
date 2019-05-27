@@ -1,4 +1,6 @@
-package com.bin;
+package com.bin.order.parts;
+
+import com.bin.interfaces.OrderPartInterface;
 
 public class Drink implements OrderPartInterface {
 	
