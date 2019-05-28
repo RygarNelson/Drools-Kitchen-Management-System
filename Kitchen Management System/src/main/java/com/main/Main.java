@@ -16,6 +16,7 @@ public class Main {
     	    KieContainer kContainer = ks.getKieClasspathContainer();
         	KieSession kSession = kContainer.newKieSession("ksession-rules");
         	
+        	kSession.setGlobal("maxRandomTime", 2000);
         	kSession.addEventListener(new EventListener());
             // go !
         	//Order creation
@@ -38,9 +39,6 @@ public class Main {
    
     		FactHandle o1 = kSession.insert(order1);
     		FactHandle o2 = kSession.insert(order2);
-            order1.getTimer().stop();
-            kSession.update(o1, order1);
-    		Thread.sleep(2100);
             kSession.fireAllRules();
         } catch (Throwable t) {
             t.printStackTrace();

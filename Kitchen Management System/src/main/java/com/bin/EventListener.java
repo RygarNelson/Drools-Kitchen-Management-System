@@ -40,6 +40,7 @@ public class EventListener implements RuleRuntimeEventListener{
 					break;
 				}
 			}
+			temp.setPriority(OrderPriority.NORMAL);
 			temp.getTimer().start();
 			arg0.getKieRuntime().update(handler, temp);
 		}

@@ -2,12 +2,11 @@
 package com.bin
 
 //list any import classes here.
-
+import java.util.Random;
 
 
 //declare any global variables here
-
-
+global Integer maxRandomTime;
 
 
 rule "PrintAllOrders"
@@ -27,3 +26,55 @@ rule "TimerExpired"
 		System.out.println("Timer of order "+order.getID()+" has been expired and the priority has been set to "+order.getPriority());
 end
 
+rule "ChangeStatus"
+	when
+	
+		order : Order()
+	then
+
+		Random random = new Random();
+		int time = random.nextInt(maxRandomTime);
+		long start = System.currentTimeMillis();
+		
+		//Wait
+		while(System.currentTimeMillis() - start < time){
+		//I do nothing
+		}
+		
+		//Change status
+		switch(order.getStatus()){
+			case ORDERED:{
+				order.setStatus(OrderStatus.DRINKS);
+				update(order);
+				System.out.println(order.toString());
+				break;
+			}
+			case DRINKS:{
+				order.setStatus(OrderStatus.FIRST_COURSE);
+				update(order);
+				System.out.println(order.toString());
+				break;
+			}
+			case FIRST_COURSE:{
+				order.setStatus(OrderStatus.SECOND_COURSE);
+				update(order);
+				System.out.println(order.toString());
+				break;
+			}
+			case SECOND_COURSE:{
+				order.setStatus(OrderStatus.DESSERT);
+				update(order);
+				System.out.println(order.toString());
+				break;
+			}
+			case DESSERT:{
+				order.setStatus(OrderStatus.COMPLETED);
+				update(order);
+				System.out.println(order.toString());
+				break;
+			}
+			case COMPLETED:{
+				break;
+			}
+		}
+end
