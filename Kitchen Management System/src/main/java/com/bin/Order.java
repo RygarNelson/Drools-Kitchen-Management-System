@@ -1,19 +1,11 @@
 package com.bin;
 
-import com.bin.enumerators.OrderStatus;
-import com.bin.enumerators.OrderType;
-import com.bin.order.parts.Dessert;
-import com.bin.order.parts.Drink;
-import com.bin.order.parts.FirstCourse;
-import com.bin.order.parts.SecondCourse;
-import com.bin.order.parts.Starter;
-
 public class Order {
 	
 	private final int ID;
 	private final OrderType type;
 	private OrderStatus status;
-	private int priority;
+	private OrderPriority priority;
 	private Starter starter;
 	private FirstCourse firstCourse;
 	private SecondCourse secondCourse;
@@ -22,7 +14,7 @@ public class Order {
 	private Timer timer;
 	
 	public Order(int id, OrderType type, OrderStatus status, Starter starter, FirstCourse firstCourse,
-			SecondCourse secondCourse, Dessert dessert, Drink drink, int timeExpected) {
+			SecondCourse secondCourse, Dessert dessert, Drink drink) {
 		this.ID = id;
 		this.type = type;
 		this.status = status;
@@ -31,7 +23,7 @@ public class Order {
 		this.secondCourse = secondCourse;
 		this.dessert = dessert;
 		this.drink = drink;
-		this.timer = new Timer(id, timeExpected);
+		this.timer = new Timer(id);
 	}
 
 	public OrderStatus getStatus() {
@@ -42,11 +34,11 @@ public class Order {
 		this.status = status;
 	}
 
-	public int getPriority() {
+	public OrderPriority getPriority() {
 		return priority;
 	}
 
-	public void setPriority(int priority) {
+	public void setPriority(OrderPriority priority) {
 		this.priority = priority;
 	}
 

@@ -1,6 +1,4 @@
-package com.bin.order.parts;
-
-import com.bin.interfaces.OrderPartInterface;
+package com.bin;
 
 public class Starter implements OrderPartInterface {
 	

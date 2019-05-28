@@ -1,4 +1,4 @@
-package com.bin.interfaces;
+package com.bin;
 
 public interface OrderPartInterface {
 

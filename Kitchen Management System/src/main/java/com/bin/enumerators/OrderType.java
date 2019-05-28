@@ -1,4 +1,4 @@
-package com.bin.enumerators;
+package com.bin;
 
 public enum OrderType {
 	LOCAL,

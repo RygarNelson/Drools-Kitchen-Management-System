@@ -8,9 +8,8 @@ public class Timer{
 	protected long timeExpected;
 	private StopWatch stopwatch;
 	
-	public Timer(int orderID, long timeExpected) {
+	public Timer(int orderID) {
 		this.orderID = orderID;
-		this.timeExpected = timeExpected;
 		this.stopwatch = new StopWatch();
 	}
 	
@@ -24,6 +23,10 @@ public class Timer{
 	
 	public long getTimeExpected() {
 		return timeExpected;
+	}
+	
+	public void setTimeExpected(long timeExpected) {
+		this.timeExpected = timeExpected;
 	}
 
 	public int getOrderID() {
