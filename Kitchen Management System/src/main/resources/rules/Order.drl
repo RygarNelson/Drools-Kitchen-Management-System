@@ -46,31 +46,26 @@ rule "ChangeStatus"
 			case ORDERED:{
 				order.setStatus(OrderStatus.DRINKS);
 				update(order);
-				System.out.println(order.toString());
 				break;
 			}
 			case DRINKS:{
 				order.setStatus(OrderStatus.FIRST_COURSE);
 				update(order);
-				System.out.println(order.toString());
 				break;
 			}
 			case FIRST_COURSE:{
 				order.setStatus(OrderStatus.SECOND_COURSE);
 				update(order);
-				System.out.println(order.toString());
 				break;
 			}
 			case SECOND_COURSE:{
 				order.setStatus(OrderStatus.DESSERT);
 				update(order);
-				System.out.println(order.toString());
 				break;
 			}
 			case DESSERT:{
 				order.setStatus(OrderStatus.COMPLETED);
 				update(order);
-				System.out.println(order.toString());
 				break;
 			}
 			case COMPLETED:{
