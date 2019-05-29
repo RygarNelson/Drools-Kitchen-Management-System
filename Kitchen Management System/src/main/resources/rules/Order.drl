@@ -73,3 +73,10 @@ rule "ChangeStatus"
 			}
 		}
 end
+
+rule "DeleteOrderOnCompletition"
+	when
+		order : Order(status == OrderStatus.COMPLETED)
+	then
+		retract(order);
+end

@@ -10,8 +10,15 @@ public class EventListener implements RuleRuntimeEventListener{
 
 	@Override
 	public void objectDeleted(ObjectDeletedEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		/*
+		 * Whenever an order has been completed, it will be removed
+		 * from the working memory
+		 */
+		if(arg0.getOldObject().getClass() == Order.class) {
+			Order temp = (Order)arg0.getOldObject();
+			System.out.println("The order "+temp.getID()+" has been deleted"
+					+ " since it has been completed");
+		}
 	}
 
 	@Override
