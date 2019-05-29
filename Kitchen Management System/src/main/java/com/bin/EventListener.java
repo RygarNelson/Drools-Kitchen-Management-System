@@ -28,27 +28,29 @@ public class EventListener implements RuleRuntimeEventListener{
 		if(arg0.getObject().getClass() == Order.class) {
 			//Is an order
 			Order temp = (Order)arg0.getObject();
-			FactHandle handler = arg0.getKieRuntime().getFactHandle(temp);
-			switch(temp.getType()) {
-				case LOCAL:{
-					//3
-					temp.getTimer().setTimeExpected(3000);
-					break;
+			if(temp.getWaiterID() == -1) {
+				FactHandle handler = arg0.getKieRuntime().getFactHandle(temp);
+				switch(temp.getType()) {
+					case LOCAL:{
+						//3
+						temp.getTimer().setTimeExpected(3000);
+						break;
+					}
+					case TAKEAWAY:{
+						//5
+						temp.getTimer().setTimeExpected(5000);
+						break;
+					}
+					case DELIVERY:{
+						//10
+						temp.getTimer().setTimeExpected(10000);
+						break;
+					}
 				}
-				case TAKEAWAY:{
-					//5
-					temp.getTimer().setTimeExpected(5000);
-					break;
-				}
-				case DELIVERY:{
-					//10
-					temp.getTimer().setTimeExpected(10000);
-					break;
-				}
+				temp.setPriority(OrderPriority.NORMAL);
+				temp.getTimer().start();
+				arg0.getKieRuntime().update(handler, temp);
 			}
-			temp.setPriority(OrderPriority.NORMAL);
-			temp.getTimer().start();
-			arg0.getKieRuntime().update(handler, temp);
 		}
 	}
 

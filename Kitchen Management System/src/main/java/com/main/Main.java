@@ -19,6 +19,11 @@ public class Main {
         	kSession.setGlobal("maxRandomTime", 2000);
         	kSession.addEventListener(new EventListener());
             // go !
+        	
+        	//Waiter creation
+        	Waiter waiter1 = new Waiter(1, "Bob");
+        	Waiter waiter2 = new Waiter(2, "Alice");
+        	
         	//Order creation
     		int iDOrder1 = 0;
     		int iDOrder2 = 1;
@@ -36,7 +41,9 @@ public class Main {
     				new Dessert(iDOrder2, "Apple Pie"),
     				new Drink(iDOrder2, "Water")
     				);
-   
+    		FactHandle w1 = kSession.insert(waiter1);
+    		FactHandle w2 = kSession.insert(waiter2);
+    		
     		FactHandle o1 = kSession.insert(order1);
     		FactHandle o2 = kSession.insert(order2);
             kSession.fireAllRules();

@@ -8,6 +8,12 @@ import java.util.Random;
 //declare any global variables here
 global Integer maxRandomTime;
 
+rule "PrintAllWaiters"
+	when
+		waiter : Waiter()
+	then
+		System.out.println("Waiter: " + waiter.toString());
+end
 
 rule "PrintAllOrders"
 
@@ -30,6 +36,23 @@ rule "TimerExpired"
 		}
 end
 
+rule "AssignWaiterToOrder"
+	when
+		order: Order()
+		waiter : Waiter(isavailable)
+	then
+		if(order.getWaiterID() == -1){
+			order.setWaiterID(waiter.getWaiterID());
+			waiter.setIsavailable(false);
+			System.out.println("The waiter "+waiter.getName()+" with ID "+waiter.getWaiterID()+" has been assigned to the order "+order.getID());
+			update(order);
+			update(waiter);
+		} else {
+			System.out.println("The waiter "+order.getWaiterID()+" has already been assigned to the order "+order.getID());
+		}
+		
+end
+
 rule "ChangeStatus"
 	when
 	
@@ -49,26 +72,31 @@ rule "ChangeStatus"
 		switch(order.getStatus()){
 			case ORDERED:{
 				order.setStatus(OrderStatus.DRINKS);
+				order.freeWaiter();
 				update(order);
 				break;
 			}
 			case DRINKS:{
 				order.setStatus(OrderStatus.FIRST_COURSE);
+				order.freeWaiter();
 				update(order);
 				break;
 			}
 			case FIRST_COURSE:{
 				order.setStatus(OrderStatus.SECOND_COURSE);
+				order.freeWaiter();
 				update(order);
 				break;
 			}
 			case SECOND_COURSE:{
 				order.setStatus(OrderStatus.DESSERT);
+				order.freeWaiter();
 				update(order);
 				break;
 			}
 			case DESSERT:{
 				order.setStatus(OrderStatus.COMPLETED);
+				order.freeWaiter();
 				update(order);
 				break;
 			}

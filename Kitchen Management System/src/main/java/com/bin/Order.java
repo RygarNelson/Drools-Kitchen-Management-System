@@ -12,6 +12,7 @@ public class Order {
 	private Dessert dessert;
 	private Drink drink;
 	private Timer timer;
+	private int waiterID;
 	
 	public Order(int id, OrderType type, OrderStatus status, Starter starter, FirstCourse firstCourse,
 			SecondCourse secondCourse, Dessert dessert, Drink drink) {
@@ -24,6 +25,7 @@ public class Order {
 		this.dessert = dessert;
 		this.drink = drink;
 		this.timer = new Timer(id);
+		this.waiterID = -1;
 	}
 
 	public OrderStatus getStatus() {
@@ -99,11 +101,23 @@ public class Order {
 		return timer;
 	}
 
+	public int getWaiterID() {
+		return waiterID;
+	}
+
+	public void setWaiterID(int waiterID) {
+		this.waiterID = waiterID;
+	}
+	
+	public void freeWaiter() {
+		this.waiterID = -1;
+	}
+
 	@Override
 	public String toString() {
 		return "Order [ID=" + ID + ", type=" + type + ", status=" + status + ", priority=" + priority + ", starter="
 				+ starter + ", firstCourse=" + firstCourse + ", secondCourse=" + secondCourse + ", dessert=" + dessert
-				+ ", drink=" + drink +"]";
+				+ ", drink=" + drink +", waiter="+ waiterID+"]";
 	}
 	
 }
