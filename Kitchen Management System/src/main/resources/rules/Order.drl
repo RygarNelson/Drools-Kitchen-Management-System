@@ -22,8 +22,12 @@ rule "TimerExpired"
 	when
 		order: Order(timer.expired == true)
 	then
-		order.setPriority(OrderPriority.HIGH);
-		System.out.println("Timer of order "+order.getID()+" has been expired and the priority has been set to "+order.getPriority());
+		if(order.getPriority() == OrderPriority.HIGH){
+			System.out.println("Timer of order "+order.getID()+" has been expired and the priority has already been set to "+order.getPriority());
+		} else {
+			order.setPriority(OrderPriority.HIGH);
+			System.out.println("Timer of order "+order.getID()+" has been expired and the priority has been set to "+order.getPriority());
+		}
 end
 
 rule "ChangeStatus"
