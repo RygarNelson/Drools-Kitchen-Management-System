@@ -18,7 +18,6 @@ public class EventListener implements RuleRuntimeEventListener{
 	public void objectInserted(ObjectInsertedEvent arg0) {
 		//When a new order is inserted, we check the type of the order
 		//Based on that, we will decide the time expected to be completed
-		//List<String> classType = arg0.getObject().getClass().toString().split(".");
 		if(arg0.getObject().getClass() == Order.class) {
 			//Is an order
 			Order temp = (Order)arg0.getObject();
@@ -48,8 +47,27 @@ public class EventListener implements RuleRuntimeEventListener{
 
 	@Override
 	public void objectUpdated(ObjectUpdatedEvent arg0) {
-		// TODO Auto-generated method stub
+		/*
+		 * When an order has been updated for the first time, it means
+		 * that the timeExpected has been added to it
+		 * 
+		 * In all other cases, it has changed status
+		 */
 		
+		if(arg0.getObject().getClass() == Order.class) {
+			//Is an order
+			Order temp = (Order)arg0.getObject();
+			
+			if(temp.getStatus() == OrderStatus.ORDERED) {
+				//It has been updated for the first time
+				System.out.println("The time expected for the order "+temp.getID()+
+						" has been added and is "+temp.getTimer().getTimeExpected()/1000+" seconds");
+			} else {
+				//It has changed status
+				System.out.println("The order "+temp.getID()+" has changed status"
+						+ " and now is "+temp.getStatus());
+			}
+		}
 	}
 	
 }
