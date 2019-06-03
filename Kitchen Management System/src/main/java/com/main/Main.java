@@ -25,35 +25,14 @@ public class Main {
     		Gui frame = new Gui(kSession);
     		frame.setSize(500,300);
     	    frame.setVisible(true);	
-        	
-//            // go !
-//        	
-//        	//Waiter creation
+	     	
+    	    //Waiter creation
         	Waiter waiter1 = new Waiter(1, "Bob");
         	Waiter waiter2 = new Waiter(2, "Alice");
-//        	
-//        	//Order creation
-//    		int iDOrder1 = 0;
-//    		int iDOrder2 = 1;
-//    		Order order1 = new Order(iDOrder1, OrderType.LOCAL, OrderStatus.ORDERED, 
-//    				new Starter(iDOrder1, "Mixed starters"), 
-//    				new FirstCourse(iDOrder1, "Spaghetti"), 
-//    				null, 
-//    				new Dessert(iDOrder1, "Apple Pie"),
-//    				new Drink(iDOrder1, "Water")
-//    				);
-//    		Order order2 = new Order(iDOrder2, OrderType.LOCAL, OrderStatus.ORDERED, 
-//    				new Starter(iDOrder2, "Mixed starters"), 
-//    				new FirstCourse(iDOrder2, "Spaghetti"), 
-//    				new SecondCourse(iDOrder2, "Fish 'n Chips"), 
-//    				new Dessert(iDOrder2, "Apple Pie"),
-//    				new Drink(iDOrder2, "Water")
-//    				);
+        	
     		FactHandle w1 = kSession.insert(waiter1);
     		FactHandle w2 = kSession.insert(waiter2);
-//    		
-//    		FactHandle o1 = kSession.insert(order1);
-//    		FactHandle o2 = kSession.insert(order2);
+    		
             kSession.fireAllRules();
 
     }

@@ -8,6 +8,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
 
 import javax.swing.*;
 
@@ -153,7 +154,7 @@ private KieSession kc;
 					new Dessert(id, dessertB.getSelectedItem().toString()),
 					new Drink(id, drinkB.getSelectedItem().toString())
 				);
-            	JOptionPane.showMessageDialog(null, "Item inserted correctly");
+            	CompletableFuture.runAsync(() -> JOptionPane.showMessageDialog(null, "Item inserted correctly"));
             	FactHandle w1 = kc.insert(order);
             	kc.fireAllRules();
             }
