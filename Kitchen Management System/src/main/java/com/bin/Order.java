@@ -108,10 +108,6 @@ public class Order {
 	public void setWaiterID(int waiterID) {
 		this.waiterID = waiterID;
 	}
-	
-	public void freeWaiter() {
-		this.waiterID = -1;
-	}
 
 	@Override
 	public String toString() {

@@ -153,8 +153,9 @@ private KieSession kc;
 					new Dessert(id, dessertB.getSelectedItem().toString()),
 					new Drink(id, drinkB.getSelectedItem().toString())
 				);
+            	JOptionPane.showMessageDialog(null, "Item inserted correctly");
             	FactHandle w1 = kc.insert(order);
-            	JOptionPane.showMessageDialog(null, dessertB.getSelectedItem());
+            	kc.fireAllRules();
             }
         });
 	    

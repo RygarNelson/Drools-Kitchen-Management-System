@@ -67,7 +67,7 @@ public class EventListener implements RuleRuntimeEventListener{
 			//Is an order
 			Order temp = (Order)arg0.getObject();
 			
-			if(temp.getStatus() == OrderStatus.ORDERED) {
+			if(temp.getStatus() == OrderStatus.ORDERED && temp.getWaiterID() == -1) {
 				//It has been updated for the first time
 				System.out.println("The time expected for the order "+temp.getID()+
 						" has been added and is "+temp.getTimer().getTimeExpected()/1000+" seconds");
