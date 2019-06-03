@@ -24,7 +24,7 @@ public class Main {
         	
     		Gui frame = new Gui(kSession);
     		frame.setSize(500,300);
-    	    frame.setVisible(true);	
+    	    frame.setVisible(true);
 	     	
     	    //Waiter creation
         	Waiter waiter1 = new Waiter(1, "Bob");

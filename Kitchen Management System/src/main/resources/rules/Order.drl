@@ -15,6 +15,25 @@ rule "PrintAllWaiters"
 		System.out.println("Waiter: " + waiter.toString());
 end
 
+rule "AssignWaiterToOrder"
+	when
+		order: Order()
+		waiter : Waiter()
+	then
+		if(order.getWaiterID() == -1 && order.getStatus() != OrderStatus.COMPLETED){
+			order.setWaiterID(waiter.getWaiterID());
+			System.out.println("The waiter "+waiter.getName()+" with ID "+waiter.getWaiterID()+" has been assigned to the order "+order.getID());
+			update(order);
+		}
+end
+
+rule "DeleteOrderOnCompletition"
+	when
+		order : Order(status == OrderStatus.COMPLETED)
+	then
+		retract(order);
+end
+
 rule "PrintAllOrders"
 
     when
@@ -31,23 +50,9 @@ rule "TimerExpired"
 		if(order.getPriority() == OrderPriority.HIGH){
 			System.out.println("Timer of order "+order.getID()+" has been expired and the priority has already been set to "+order.getPriority());
 		} else {
-			order.setPriority(OrderPriority.HIGH);
-			System.out.println("Timer of order "+order.getID()+" has been expired and the priority has been set to "+order.getPriority());
-		}
-end
-
-rule "AssignWaiterToOrder"
-	when
-		order: Order()
-		waiter : Waiter()
-	then
-		if(order.getWaiterID() == -1 && order.getStatus() != OrderStatus.COMPLETED){
-			order.setWaiterID(waiter.getWaiterID());
-			System.out.println("The waiter "+waiter.getName()+" with ID "+waiter.getWaiterID()+" has been assigned to the order "+order.getID());
-			update(order);
-		} else {
 			if(order.getStatus() != OrderStatus.COMPLETED){
-				System.out.println("The waiter "+order.getWaiterID()+" has already been assigned to the order "+order.getID());
+				order.setPriority(OrderPriority.HIGH);
+				System.out.println("Timer of order "+order.getID()+" has been expired and the priority has been set to "+order.getPriority());
 			}
 		}
 end
@@ -103,11 +108,4 @@ rule "ChangeStatus"
 				break;
 			}
 		}
-end
-
-rule "DeleteOrderOnCompletition"
-	when
-		order : Order(status == OrderStatus.COMPLETED)
-	then
-		retract(order);
 end

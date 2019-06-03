@@ -72,9 +72,12 @@ public class EventListener implements RuleRuntimeEventListener{
 				System.out.println("The time expected for the order "+temp.getID()+
 						" has been added and is "+temp.getTimer().getTimeExpected()/1000+" seconds");
 			} else {
-				//It has changed status
-				System.out.println("The order "+temp.getID()+" has changed status"
-						+ " and now is "+temp.getStatus());
+				//Check if a waiter has been assigned or it has changed status
+				if(temp.getWaiterID() == -1) {
+					//Has changed status
+					System.out.println("The order "+temp.getID()+" has changed status"
+							+ " and now is "+temp.getStatus());
+				}
 			}
 		}
 	}
