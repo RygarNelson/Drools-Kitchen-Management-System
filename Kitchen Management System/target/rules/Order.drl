@@ -82,6 +82,12 @@ rule "ChangeStatus"
 				break;
 			}
 			case DRINKS:{
+				order.setStatus(OrderStatus.STARTER);
+				order.setWaiterID(-1);
+				update(order);
+				break;
+			}
+			case STARTER:{
 				order.setStatus(OrderStatus.FIRST_COURSE);
 				order.setWaiterID(-1);
 				update(order);

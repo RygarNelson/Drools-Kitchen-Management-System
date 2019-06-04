@@ -8,8 +8,6 @@ import java.util.Observer;
 
 import javax.swing.*;
 
-import org.mvel2.sh.command.basic.Exit;
-
 import com.bin.Order;
 
 public class OrderStatus implements Observer {
@@ -19,7 +17,8 @@ public class OrderStatus implements Observer {
 	
 	public OrderStatus() {
 		this.orderList = new ArrayList<Order>();
-		this.orderPanel = new JPanel();
+		this.orderPanel = new JPanel(new GridLayout(0,2));
+		this.orderPanel.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
 		this.init();
 	}
 	
@@ -40,9 +39,8 @@ public class OrderStatus implements Observer {
 	private void init() {
 		JFrame frame = new JFrame();
 		frame.setTitle("Order Status");
-		frame.setSize(500,300);
+		frame.setSize(800,600);
 		frame.setDefaultCloseOperation(3);
-		frame.setLayout(new GridLayout());
 		DynamicFramePosition.setLocationToRight(frame);
 	    frame.setVisible(true);
 		this.writeOrders();
@@ -52,7 +50,19 @@ public class OrderStatus implements Observer {
 	private void writeOrders() {
 		this.orderPanel.removeAll();
 		for(Order order : this.orderList) {
-			JLabel orderLabel = new JLabel(order.toString());
+			JLabel orderLabel = new JLabel("<html>"+
+					"ID: "+order.getID() +"<br/>"+
+					"Type: "+order.getType() +"<br/>"+
+					"Waiter ID: "+order.getWaiterID() +"<br/>"+
+					"Priority: "+order.getPriority() +"<br/>"+
+					"Status: "+order.getStatus() +"<br/>"+
+					"Drinks: "+order.getDrink()+"<br/>"+
+					"Starter: "+order.getStarter()+"<br/>"+
+					"First Course: "+order.getFirstCourse()+"<br/>"+
+					"Second Course: "+order.getSecondCourse()+"<br/>"+
+					"Dessert: "+order.getDessert()+
+					"</html>"
+			);
 			this.orderPanel.add(orderLabel);
 		}
 		this.orderPanel.revalidate();

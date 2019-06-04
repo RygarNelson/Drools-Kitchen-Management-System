@@ -1,6 +1,7 @@
 package com.gui;
 
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
@@ -35,9 +36,8 @@ public class NewOrder extends JFrame{
 		frame.setTitle("New Order");
 		frame.setSize(500,300);
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-	    frame.setLayout(new FlowLayout());
 		
-		JPanel panel = new JPanel();
+		JPanel panel = new JPanel(new GridLayout(0, 1));
 		
 		JLabel typeL = new JLabel("Type");
 		JComboBox typeB = new JComboBox();
