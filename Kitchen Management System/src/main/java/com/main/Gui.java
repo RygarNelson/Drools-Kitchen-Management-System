@@ -5,8 +5,12 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.GraphicsConfiguration;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.List;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -35,9 +39,6 @@ import com.bin.Starter;
 
 public class Gui extends JFrame implements Observer{
 
-private JPanel neworderPanel = new JPanel();
-private JPanel checkstatusPanel = new JPanel();
-private JPanel panel3 = new JPanel();
 private KieSession kc;
 private ArrayList<Order> orderList;
 private JPanel orderPanel;
@@ -46,8 +47,6 @@ private JPanel orderPanel;
 		kc = kSession;
 		this.orderList = new ArrayList<Order>();
 		this.orderPanel = new JPanel();
-	    setDefaultCloseOperation(EXIT_ON_CLOSE);
-	    setLayout(new FlowLayout());
 	    initview();
 	}
 	
@@ -63,6 +62,10 @@ private JPanel orderPanel;
 			System.out.println("Modifico ordine");
 			System.out.println(map.get(2).getID());
 			this.orderList.set(this.orderList.indexOf(map.get(2)), map.get(2));
+		} else if(map.containsKey(3)) {
+			System.out.println("Elimino ordine");
+			System.out.println(map.get(3).getID());
+			this.orderList.remove(map.get(3));
 		}
 		this.writeOrders();
 	}
@@ -77,45 +80,55 @@ private JPanel orderPanel;
 	}
 
 	private void initview() {
-		JPanel firstpanel = new JPanel();
-		JButton neworder = new JButton("Create new order");
-		JButton checkstatus = new JButton("Check order status");
-		
-		firstpanel.add(neworder);
-		firstpanel.add(checkstatus);
-	    
-	    add(firstpanel);
-	    
-	    neworder.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	getNewOrderPanel();
-            	setLayout(new FlowLayout());
-            	setVisible(true);
-            }
-        });
-	    
-	    checkstatus.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	setContentPane(getCheckStatusPanel());
-            	setLayout(new GridLayout(2, 1));
-            	setVisible(true);
-            }
-        });
-	    
+//		JPanel firstpanel = new JPanel();
+//		JButton neworder = new JButton("Create new order");
+//		JButton checkstatus = new JButton("Check order status");
+//		
+//		firstpanel.add(neworder);
+//		firstpanel.add(checkstatus);
+//	    
+//	    add(firstpanel);
+//	    
+//	    neworder.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//            	getNewOrderPanel();
+//            	setLayout(new FlowLayout());
+//            	setVisible(true);
+//            }
+//        });
+//	    
+//	    checkstatus.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//            	setContentPane(getCheckStatusPanel());
+//            	setLayout(new GridLayout(2, 1));
+//            	setVisible(true);
+//            }
+//        });
+		getCheckStatusPanel();
+		getNewOrderPanel();
 	
 	}
 	
-	private Container getCheckStatusPanel() {
-		this.writeOrders();
-		return this.orderPanel;
-	}
-	
-	private Container getNewOrderPanel() {
+	private void getCheckStatusPanel() {
 		JFrame frame = new JFrame();
+		frame.setTitle("Order Status");
 		frame.setSize(500,300);
-		frame.setVisible(true);
+		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		frame.setLayout(new GridLayout());
+		this.setLocationToRight(frame);
+	    frame.setVisible(true);
+		this.writeOrders();
+		frame.setContentPane(this.orderPanel);
+	}
+	
+	private void getNewOrderPanel() {
+		JFrame frame = new JFrame();
+		frame.setTitle("New Order");
+		frame.setSize(500,300);
+		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	    frame.setLayout(new FlowLayout());
 		
 		JPanel panel = new JPanel();
 		
@@ -133,10 +146,7 @@ private JPanel orderPanel;
 	    drinkB.addItem("Wine");
 	    drinkB.addItem("Coca Cola");
 	    drinkB.addItem("Beer");
-//		comboBox.addActionListener(new ActionListener() {
-//	        public void actionPerformed(ActionEvent arg0) {
-//	        }
-//	    });
+
 	    panel.add(drinkL);
 	    panel.add(drinkB);
 	    
@@ -145,10 +155,7 @@ private JPanel orderPanel;
 		starterB.addItem("Mix");
 		starterB.addItem("Ham");
 		starterB.addItem("Grilled cheese");
-//		comboBox.addActionListener(new ActionListener() {
-//	        public void actionPerformed(ActionEvent arg0) {
-//	        }
-//	    });
+
 	    panel.add(starterL);
 	    panel.add(starterB);
 	    
@@ -157,10 +164,7 @@ private JPanel orderPanel;
 		firstCourseB.addItem("Spaghetti");
 		firstCourseB.addItem("Tortellini");
 		firstCourseB.addItem("Lasagna");
-//		comboBox.addActionListener(new ActionListener() {
-//	        public void actionPerformed(ActionEvent arg0) {
-//	        }
-//	    });
+
 	    panel.add(firstCourseL);
 	    panel.add(firstCourseB);
 	    
@@ -169,10 +173,7 @@ private JPanel orderPanel;
 		secondCourseB.addItem("Fish 'n Chips");
 		secondCourseB.addItem("Chicken");
 		secondCourseB.addItem("Pulled pork");
-//		comboBox.addActionListener(new ActionListener() {
-//	        public void actionPerformed(ActionEvent arg0) {
-//	        }
-//	    });
+
 	    panel.add(secondCourseL);
 	    panel.add(secondCourseB);
 	    
@@ -181,10 +182,7 @@ private JPanel orderPanel;
 		dessertB.addItem("Apple pie");
 		dessertB.addItem("Carrot pie");
 		dessertB.addItem("Ice cream");
-//		comboBox.addActionListener(new ActionListener() {
-//	        public void actionPerformed(ActionEvent arg0) {
-//	        }
-//	    });
+
 	    panel.add(dessertL);
 	    panel.add(dessertB);
 		 
@@ -205,11 +203,46 @@ private JPanel orderPanel;
             	CompletableFuture.runAsync(() -> kc.fireAllRules());
             }
         });
-	    
 	    panel.add(btnSubmit);
 	    frame.setContentPane(panel);
-		return panel;
-			
+	    
+	    //We need to call this after all components are loaded into the window, otherwise
+	    //it will load an empty window and, in order to show correctly all the components, the user has to resize the window
+	    frame.setVisible(true);
 	}
+	
+	/**
+	 * Calculate dynamically the max borders of a screen based on the resolution
+	 * @param frame The frame to move
+	 * @return The max bounds of the screen
+	 */
+	private static Rectangle getMaxWindowBounds(JFrame frame) {
+        GraphicsConfiguration config = frame.getGraphicsConfiguration();
+        Rectangle bounds = config.getBounds();
+        Insets insets = Toolkit.getDefaultToolkit().getScreenInsets(config);
+        bounds.x += insets.left;
+        bounds.y += insets.top;
+        bounds.width -= insets.left + insets.right;
+        bounds.height -= insets.top + insets.bottom;
+        return bounds;
+    }
+
+    private static void setLocationToTop(JFrame frame) {
+        frame.setLocation(frame.getX(), getMaxWindowBounds(frame).y);
+    }
+
+    private static void setLocationToLeft(JFrame frame) {
+        frame.setLocation(getMaxWindowBounds(frame).x, frame.getY());
+    }
+
+    private static void setLocationToBottom(JFrame frame) {
+        Rectangle bounds = getMaxWindowBounds(frame);
+        frame.setLocation(frame.getX(), bounds.y + bounds.height - frame.getHeight());
+    }
+
+    private static void setLocationToRight(JFrame frame) {
+        Rectangle bounds = getMaxWindowBounds(frame);
+        frame.setLocation(bounds.x + bounds.width - frame.getWidth(), frame.getY());
+    }
 
 }

@@ -25,7 +25,10 @@ public class OrderObservable extends Observable {
 	
 	
 	public void deleteOrder(Order o) {
-		
+		Map map = new HashMap<Integer, Order>();
+		map.put(3, o);
+		setChanged();
+		notifyObservers(map);
 	}
 
 }

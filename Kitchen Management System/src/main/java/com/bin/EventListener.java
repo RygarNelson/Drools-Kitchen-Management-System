@@ -27,6 +27,7 @@ public class EventListener implements RuleRuntimeEventListener{
 			Order temp = (Order)arg0.getOldObject();
 			System.out.println("The order "+temp.getID()+" has been deleted"
 					+ " since it has been completed");
+			this.orderObservable.deleteOrder(temp);
 		}
 	}
 

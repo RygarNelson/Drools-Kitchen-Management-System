@@ -1,0 +1,112 @@
+//created on: 22-mag-2019
+package com.bin
+
+//list any import classes here.
+import java.util.Random;
+
+
+//declare any global variables here
+global Integer maxRandomTime;
+
+rule "PrintAllWaiters"
+	when
+		waiter : Waiter()
+	then
+		System.out.println("Waiter: " + waiter.toString());
+end
+
+rule "AssignWaiterToOrder"
+	when
+		order: Order()
+		waiter : Waiter()
+	then
+		if(order.getWaiterID() == -1 && order.getStatus() != OrderStatus.COMPLETED){
+			order.setWaiterID(waiter.getWaiterID());
+			System.out.println("The waiter "+waiter.getName()+" with ID "+waiter.getWaiterID()+" has been assigned to the order "+order.getID());
+			update(order);
+		}
+end
+
+rule "DeleteOrderOnCompletition"
+	when
+		order : Order(status == OrderStatus.COMPLETED)
+	then
+		retract(order);
+end
+
+rule "PrintAllOrders"
+
+    when
+        order: Order()
+    then
+        System.out.println("Order: "+order.toString());
+
+end
+
+rule "TimerExpired"
+	when
+		order: Order(timer.expired == true)
+	then
+		if(order.getPriority() == OrderPriority.HIGH){
+			System.out.println("Timer of order "+order.getID()+" has been expired and the priority has already been set to "+order.getPriority());
+		} else {
+			if(order.getStatus() != OrderStatus.COMPLETED){
+				order.setPriority(OrderPriority.HIGH);
+				System.out.println("Timer of order "+order.getID()+" has been expired and the priority has been set to "+order.getPriority());
+			}
+		}
+end
+
+rule "ChangeStatus"
+	when
+	
+		order : Order()
+	then
+
+		Random random = new Random();
+		//int time = random.nextInt(maxRandomTime);
+		int time = 2000;
+		long start = System.currentTimeMillis();
+		
+		//Wait
+		while(System.currentTimeMillis() - start < time){
+		//I do nothing
+		}
+		
+		//Change status
+		switch(order.getStatus()){
+			case ORDERED:{
+				order.setStatus(OrderStatus.DRINKS);
+				order.setWaiterID(-1);
+				update(order);
+				break;
+			}
+			case DRINKS:{
+				order.setStatus(OrderStatus.FIRST_COURSE);
+				order.setWaiterID(-1);
+				update(order);
+				break;
+			}
+			case FIRST_COURSE:{
+				order.setStatus(OrderStatus.SECOND_COURSE);
+				order.setWaiterID(-1);
+				update(order);
+				break;
+			}
+			case SECOND_COURSE:{
+				order.setStatus(OrderStatus.DESSERT);
+				order.setWaiterID(-1);
+				update(order);
+				break;
+			}
+			case DESSERT:{
+				order.setStatus(OrderStatus.COMPLETED);
+				order.setWaiterID(-1);
+				update(order);
+				break;
+			}
+			case COMPLETED:{
+				break;
+			}
+		}
+end

@@ -22,8 +22,6 @@ public class Main {
         	kSession.setGlobal("maxRandomTime", 2000);
         	
     		Gui frame = new Gui(kSession);
-    		frame.setSize(500,300);
-    	    frame.setVisible(true);
     	    
     	    kSession.addEventListener(new EventListener(frame));
 	     	
