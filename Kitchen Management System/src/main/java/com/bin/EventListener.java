@@ -14,7 +14,7 @@ public class EventListener implements RuleRuntimeEventListener{
 	
 	public EventListener(Gui frame) {
 		this.orderObservable = new OrderObservable();
-		this.orderObservable.addObserver(frame);
+		this.orderObservable.addObserver(frame.getOrderStatusFrame());
 	}
 	
 	@Override
