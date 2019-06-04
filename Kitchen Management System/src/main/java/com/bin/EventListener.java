@@ -6,8 +6,17 @@ import org.kie.api.event.rule.ObjectUpdatedEvent;
 import org.kie.api.event.rule.RuleRuntimeEventListener;
 import org.kie.api.runtime.rule.FactHandle;
 
-public class EventListener implements RuleRuntimeEventListener{
+import com.main.Gui;
 
+public class EventListener implements RuleRuntimeEventListener{
+	
+	OrderObservable orderObservable;
+	
+	public EventListener(Gui frame) {
+		this.orderObservable = new OrderObservable();
+		this.orderObservable.addObserver(frame);
+	}
+	
 	@Override
 	public void objectDeleted(ObjectDeletedEvent arg0) {
 		/*
@@ -48,6 +57,7 @@ public class EventListener implements RuleRuntimeEventListener{
 					}
 				}
 				temp.setPriority(OrderPriority.NORMAL);
+				this.orderObservable.addOrder(temp);
 				temp.getTimer().start();
 				arg0.getKieRuntime().update(handler, temp);
 			}
@@ -79,6 +89,7 @@ public class EventListener implements RuleRuntimeEventListener{
 							+ " and now is "+temp.getStatus());
 				}
 			}
+			this.orderObservable.modifyOrder(temp);
 		}
 	}
 	

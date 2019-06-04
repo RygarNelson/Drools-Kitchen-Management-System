@@ -64,7 +64,8 @@ rule "ChangeStatus"
 	then
 
 		Random random = new Random();
-		int time = random.nextInt(maxRandomTime);
+		//int time = random.nextInt(maxRandomTime);
+		int time = 2000;
 		long start = System.currentTimeMillis();
 		
 		//Wait

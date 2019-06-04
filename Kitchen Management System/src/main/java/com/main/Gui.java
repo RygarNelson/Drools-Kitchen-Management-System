@@ -5,8 +5,15 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,18 +33,47 @@ import com.bin.OrderType;
 import com.bin.SecondCourse;
 import com.bin.Starter;
 
-public class Gui extends JFrame{
+public class Gui extends JFrame implements Observer{
 
 private JPanel neworderPanel = new JPanel();
 private JPanel checkstatusPanel = new JPanel();
 private JPanel panel3 = new JPanel();
 private KieSession kc;
+private ArrayList<Order> orderList;
+private JPanel orderPanel;
 
 	public Gui(KieSession kSession){
 		kc = kSession;
+		this.orderList = new ArrayList<Order>();
+		this.orderPanel = new JPanel();
 	    setDefaultCloseOperation(EXIT_ON_CLOSE);
 	    setLayout(new FlowLayout());
 	    initview();
+	}
+	
+	@Override
+	public void update(Observable o, Object arg) {
+		HashMap<Integer, Order>map = (HashMap<Integer, Order>) arg;
+		if(map.containsKey(1)) {
+			//Add order
+			System.out.println("Aggiungo ordine");
+			this.orderList.add(map.get(1));
+			System.out.println("Dimensioni lista: "+this.orderList.size());
+		} else if(map.containsKey(2)) {
+			System.out.println("Modifico ordine");
+			System.out.println(map.get(2).getID());
+			this.orderList.set(this.orderList.indexOf(map.get(2)), map.get(2));
+		}
+		this.writeOrders();
+	}
+	
+	private void writeOrders() {
+		this.orderPanel.removeAll();
+		for(Order order : this.orderList) {
+			JLabel orderLabel = new JLabel(order.toString());
+			this.orderPanel.add(orderLabel);
+		}
+		this.orderPanel.revalidate();
 	}
 
 	private void initview() {
@@ -53,7 +89,7 @@ private KieSession kc;
 	    neworder.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	setContentPane(getNewOrderPanel());
+            	getNewOrderPanel();
             	setLayout(new FlowLayout());
             	setVisible(true);
             }
@@ -62,7 +98,8 @@ private KieSession kc;
 	    checkstatus.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	setLayout(new FlowLayout());
+            	setContentPane(getCheckStatusPanel());
+            	setLayout(new GridLayout(2, 1));
             	setVisible(true);
             }
         });
@@ -70,7 +107,16 @@ private KieSession kc;
 	
 	}
 	
+	private Container getCheckStatusPanel() {
+		this.writeOrders();
+		return this.orderPanel;
+	}
+	
 	private Container getNewOrderPanel() {
+		JFrame frame = new JFrame();
+		frame.setSize(500,300);
+		frame.setVisible(true);
+		
 		JPanel panel = new JPanel();
 		
 		JLabel typeL = new JLabel("Type");
@@ -154,21 +200,16 @@ private KieSession kc;
 					new Dessert(id, dessertB.getSelectedItem().toString()),
 					new Drink(id, drinkB.getSelectedItem().toString())
 				);
-            	CompletableFuture.runAsync(() -> JOptionPane.showMessageDialog(null, "Item inserted correctly"));
+            	//CompletableFuture.runAsync(() -> JOptionPane.showMessageDialog(null, "Item inserted correctly"));
             	FactHandle w1 = kc.insert(order);
-            	kc.fireAllRules();
+            	CompletableFuture.runAsync(() -> kc.fireAllRules());
             }
         });
 	    
 	    panel.add(btnSubmit);
-	    
+	    frame.setContentPane(panel);
 		return panel;
 			
 	}
-	
-	
-	
 
-
-	
 }
