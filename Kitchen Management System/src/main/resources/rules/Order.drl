@@ -18,7 +18,7 @@ end
 rule "RemoveWaiterWhenOrderIsCompleted"
 	when
 		waiter: Waiter(!isAvailable())
-		order: Order(getWaiterID() == waiter.getWaiterID() && status == OrderStatus.COMPLETED)
+		order: Order(getWaiterID() == waiter.getWaiterID() && status == OrderStatus.COMPLETED && type == OrderType.LOCAL)
 	then
 		waiter.setAvailable(true);
 		System.out.println("The Waiter "+waiter.getName()+" with ID "+waiter.getWaiterID()+" is now available");
@@ -36,7 +36,7 @@ end
 rule "AssignOrderToWaiter"
 	when
 		waiter: Waiter(isAvailable())
-		order: Order(getWaiterID() == waiter.getWaiterID() && status != OrderStatus.COMPLETED)
+		order: Order(getWaiterID() == waiter.getWaiterID() && status != OrderStatus.COMPLETED && type == OrderType.LOCAL)
 	then
 		waiter.setAvailable(false);
 		System.out.println("The Waiter "+waiter.getName()+" with ID "+waiter.getWaiterID()+" is not available");
@@ -45,7 +45,7 @@ end
 
 rule "AssignWaiterToOrder"
 	when
-		order: Order(getWaiterID() == -1 && getStatus() != OrderStatus.COMPLETED)
+		order: Order(getWaiterID() == -1 && getStatus() != OrderStatus.COMPLETED && type == OrderType.LOCAL)
 		waiter : Waiter(isAvailable())
 	then
 		order.setWaiterID(waiter.getWaiterID());
@@ -80,7 +80,7 @@ end
 rule "ChangeStatus"
 	when
 		//If I don't have a waiter associated to the order, I will not change his status
-		order : Order(waiterID != -1)
+		order : Order(waiterID != -1 && type == OrderType.LOCAL)
 	then
 		Random random = new Random();
 		//int time = random.nextInt(maxRandomTime);
@@ -97,7 +97,6 @@ rule "ChangeStatus"
 			case ORDERED:{
 				if(!(order.getDrink().getContent().equals("-"))){
 					order.setStatus(OrderStatus.DRINKS);
-					//order.setWaiterID(-1);
 					update(order);
 					break;
 				}
@@ -105,7 +104,6 @@ rule "ChangeStatus"
 			case DRINKS:{
 				if(!(order.getStarter().getContent().equals("-"))){
 					order.setStatus(OrderStatus.STARTER);
-					//order.setWaiterID(-1);
 					update(order);
 					break;
 				}
@@ -113,7 +111,6 @@ rule "ChangeStatus"
 			case STARTER:{
 				if(!(order.getFirstCourse().getContent().equals("-"))){
 					order.setStatus(OrderStatus.FIRST_COURSE);
-					//order.setWaiterID(-1);
 					update(order);
 					break;
 				}
@@ -121,7 +118,6 @@ rule "ChangeStatus"
 			case FIRST_COURSE:{
 				if(!(order.getSecondCourse().getContent().equals("-"))){
 					order.setStatus(OrderStatus.SECOND_COURSE);
-					//order.setWaiterID(-1);
 					update(order);
 					break;
 				}
@@ -129,14 +125,12 @@ rule "ChangeStatus"
 			case SECOND_COURSE:{
 				if(!(order.getDessert().getContent().equals("-"))){
 					order.setStatus(OrderStatus.DESSERT);
-					//order.setWaiterID(-1);
 					update(order);
 					break;
 				}
 			}
 			case DESSERT:{
 				order.setStatus(OrderStatus.COMPLETED);
-				//order.setWaiterID(-1);
 				update(order);
 				break;
 			}
