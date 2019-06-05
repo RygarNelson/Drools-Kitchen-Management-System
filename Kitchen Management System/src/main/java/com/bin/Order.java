@@ -128,6 +128,10 @@ public class Order {
 				kSession.update(kSession.getFactHandle(order), order);
 		});
 	}
+	
+	public void WriteLog(Order o) {
+		Printer.printToFile(o);
+	}
 
 	@Override
 	public String toString() {

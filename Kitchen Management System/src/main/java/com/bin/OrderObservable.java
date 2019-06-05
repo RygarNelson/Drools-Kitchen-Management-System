@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 public class OrderObservable extends Observable {
 	

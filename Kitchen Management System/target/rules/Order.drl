@@ -45,6 +45,7 @@ rule "DeleteOrderOnCompletition"
 		order : Order(status == OrderStatus.COMPLETED)
 	then
 		order.getTimer().stop();
+		order.WriteLog(order);
 		retract(order);
 end
 
