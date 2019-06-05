@@ -28,11 +28,15 @@ public class Main {
     	    //Waiter creation
         	Waiter waiter1 = new Waiter(1, "Bob");
         	Waiter waiter2 = new Waiter(2, "Alice");
+        	//Waiter waiter3 = new Waiter(2, "Mark");
+        	//Waiter waiter4 = new Waiter(2, "Jules");
         	
         	//Order order1 = new Order(12, OrderType.TAKEAWAY, OrderStatus.ORDERED, null, null, null, null, null);
         	
     		FactHandle w1 = kSession.insert(waiter1);
     		FactHandle w2 = kSession.insert(waiter2);
+    		//FactHandle w3 = kSession.insert(waiter3);
+    		//FactHandle w4 = kSession.insert(waiter4);
     		
     		//FactHandle o1 = kSession.insert(order1);
     		
