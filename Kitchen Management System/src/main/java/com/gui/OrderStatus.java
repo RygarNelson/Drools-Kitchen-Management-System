@@ -14,6 +14,7 @@ public class OrderStatus implements Observer {
 	
 	private ArrayList<Order> orderList;
 	private JPanel orderPanel;
+	private int lastOrderChanged = -1;
 	
 	public OrderStatus() {
 		this.orderList = new ArrayList<Order>();
@@ -30,6 +31,7 @@ public class OrderStatus implements Observer {
 			this.orderList.add(map.get(1));
 		} else if(map.containsKey(2)) {
 			this.orderList.set(this.orderList.indexOf(map.get(2)), map.get(2));
+			this.lastOrderChanged = map.get(2).getID();
 		} else if(map.containsKey(3)) {
 			this.orderList.remove(map.get(3));
 		}
@@ -51,19 +53,40 @@ public class OrderStatus implements Observer {
 		this.orderPanel.setVisible(false);
 		this.orderPanel.removeAll();
 		for(Order order : this.orderList) {
-			JLabel orderLabel = new JLabel("<html>"+
-					"ID: "+order.getID() +"<br/>"+
-					"Type: "+order.getType() +"<br/>"+
-					"Waiter ID: "+order.getWaiterID() +"<br/>"+
-					"Priority: "+order.getPriority() +"<br/>"+
-					"Status: "+order.getStatus() +"<br/>"+
-					"Drinks: "+order.getDrink()+"<br/>"+
-					"Starter: "+order.getStarter()+"<br/>"+
-					"First Course: "+order.getFirstCourse()+"<br/>"+
-					"Second Course: "+order.getSecondCourse()+"<br/>"+
-					"Dessert: "+order.getDessert()+
-					"</html>"
-			);
+			JLabel orderLabel;
+			if(order.getID() == this.lastOrderChanged) {
+				orderLabel = new JLabel(
+						"<html>"+
+							"<font color='green'>"+
+								"ID: "+order.getID() +"<br/>"+
+								"Type: "+order.getType() +"<br/>"+
+								"Waiter ID: "+order.getWaiterID() +"<br/>"+
+								"Priority: "+order.getPriority() +"<br/>"+
+								"Status: "+order.getStatus() +"<br/>"+
+								"Drinks: "+order.getDrink()+"<br/>"+
+								"Starter: "+order.getStarter()+"<br/>"+
+								"First Course: "+order.getFirstCourse()+"<br/>"+
+								"Second Course: "+order.getSecondCourse()+"<br/>"+
+								"Dessert: "+order.getDessert()+
+							"</font>"+
+						"</html>"
+				);
+			} else {
+				orderLabel = new JLabel(
+						"<html>"+
+							"ID: "+order.getID() +"<br/>"+
+							"Type: "+order.getType() +"<br/>"+
+							"Waiter ID: "+order.getWaiterID() +"<br/>"+
+							"Priority: "+order.getPriority() +"<br/>"+
+							"Status: "+order.getStatus() +"<br/>"+
+							"Drinks: "+order.getDrink()+"<br/>"+
+							"Starter: "+order.getStarter()+"<br/>"+
+							"First Course: "+order.getFirstCourse()+"<br/>"+
+							"Second Course: "+order.getSecondCourse()+"<br/>"+
+							"Dessert: "+order.getDessert()+
+						"</html>"
+				);
+			}
 			this.orderPanel.add(orderLabel);
 		}
 		this.orderPanel.revalidate();
