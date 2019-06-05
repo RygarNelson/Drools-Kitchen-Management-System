@@ -1,5 +1,9 @@
 package com.bin;
 
+import java.util.concurrent.CompletableFuture;
+
+import org.kie.api.runtime.KieSession;
+
 public class Order {
 	
 	private final int ID;
@@ -13,9 +17,10 @@ public class Order {
 	private Drink drink;
 	private Timer timer;
 	private int waiterID;
+	private KieSession kSession;
 	
 	public Order(int id, OrderType type, OrderStatus status, Starter starter, FirstCourse firstCourse,
-			SecondCourse secondCourse, Dessert dessert, Drink drink) {
+			SecondCourse secondCourse, Dessert dessert, Drink drink, KieSession kSession) {
 		this.ID = id;
 		this.type = type;
 		this.status = status;
@@ -26,6 +31,7 @@ public class Order {
 		this.drink = drink;
 		this.timer = new Timer(id);
 		this.waiterID = -1;
+		this.kSession = kSession;
 	}
 
 	public OrderStatus getStatus() {
@@ -107,6 +113,20 @@ public class Order {
 
 	public void setWaiterID(int waiterID) {
 		this.waiterID = waiterID;
+	}
+	
+	public void runAsyncTaskDeliveryTakeway(int time, Order order) {
+		long start = System.currentTimeMillis();
+				
+		CompletableFuture.runAsync(() -> {
+		        //Wait
+				while(System.currentTimeMillis() - start < time){
+				//I do nothing
+				}
+				
+				order.setStatus(OrderStatus.COMPLETED);
+				kSession.update(kSession.getFactHandle(order), order);
+		});
 	}
 
 	@Override

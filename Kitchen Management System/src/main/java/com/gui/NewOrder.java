@@ -108,7 +108,8 @@ public class NewOrder extends JFrame{
 					new FirstCourse(id, firstCourseB.getSelectedItem().toString()), 
 					new SecondCourse(id, secondCourseB.getSelectedItem().toString()), 
 					new Dessert(id, dessertB.getSelectedItem().toString()),
-					new Drink(id, drinkB.getSelectedItem().toString())
+					new Drink(id, drinkB.getSelectedItem().toString()),
+					kc
 				);
             	//CompletableFuture.runAsync(() -> JOptionPane.showMessageDialog(null, "Item inserted correctly"));
             	FactHandle w1 = kc.insert(order);

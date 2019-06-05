@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import com.bin.FirstCourse;
 import com.bin.Order;
 import com.bin.OrderStatus;
+import com.bin.OrderType;
 
 public class Display extends JFrame implements Observer{
 	private JPanel displayPanel;
@@ -107,9 +108,18 @@ public class Display extends JFrame implements Observer{
 	public void displayKitchen() {
 		this.kitchenPanel.setVisible(false);
 		this.kitchenPanel.removeAll();
-		JButton ret = new JButton("return");
-		kitchenPanel.add(ret);
 		for(Order order : this.orderList) {
+			if(order.getType().equals(OrderType.TAKEAWAY) || order.getType().equals(OrderType.DELIVERY)) {
+				JLabel firstCourse = new JLabel("<html>"+
+						"ID: "+order.getID() +"<br/>"+
+						"Type: "+order.getType() +"<br/>"+
+						"Priority: "+order.getPriority() +"<br/>"+
+						"Starter: "+order.getStarter()+"<br/>"+
+						"First Course: "+order.getFirstCourse()+"<br/>"+
+						"</html>"
+				);
+				this.kitchenPanel.add(firstCourse);
+			}
 			if(order.getStatus().equals(OrderStatus.FIRST_COURSE)){
 				JLabel firstCourse = new JLabel("<html>"+
 						"ID: "+order.getID() +"<br/>"+
@@ -135,9 +145,18 @@ public class Display extends JFrame implements Observer{
 	public void displayBar() {
 		this.barPanel.setVisible(false);
 		this.barPanel.removeAll();
-		JButton ret = new JButton("return");
-		barPanel.add(ret);
 		for(Order order : this.orderList) {
+			if(order.getType().equals(OrderType.TAKEAWAY) || order.getType().equals(OrderType.DELIVERY)) {
+				JLabel drink = new JLabel("<html>"+
+						"ID: "+order.getID() +"<br/>"+
+						"Type: "+order.getType() +"<br/>"+
+						"Priority: "+order.getPriority() +"<br/>"+
+						"Drink: "+order.getDrink()+"<br/>"+
+						"Dessert: "+order.getDessert()+"<br/>"+
+						"</html>"
+				);
+				this.barPanel.add(drink);
+			}
 			if(order.getStatus().equals(OrderStatus.DRINKS)){
 				JLabel drink = new JLabel("<html>"+
 						"ID: "+order.getID() +"<br/>"+
@@ -163,9 +182,17 @@ public class Display extends JFrame implements Observer{
 	public void displayGrill() {
 		this.grillPanel.setVisible(false);
 		this.grillPanel.removeAll();
-		JButton ret = new JButton("return");
-		grillPanel.add(ret);
 		for(Order order : this.orderList) {
+			if(order.getType().equals(OrderType.TAKEAWAY) || order.getType().equals(OrderType.DELIVERY)) {
+				JLabel secondCourse = new JLabel("<html>"+
+						"ID: "+order.getID() +"<br/>"+
+						"Type: "+order.getType() +"<br/>"+
+						"Priority: "+order.getPriority() +"<br/>"+
+						"Second Course: "+order.getSecondCourse()+"<br/>"+
+						"</html>"
+				);
+				this.grillPanel.add(secondCourse);
+			}
 			if(order.getStatus().equals(OrderStatus.SECOND_COURSE)){
 				JLabel secondCourse = new JLabel("<html>"+
 						"ID: "+order.getID() +"<br/>"+

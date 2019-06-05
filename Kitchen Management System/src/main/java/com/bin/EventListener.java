@@ -60,8 +60,8 @@ public class EventListener implements RuleRuntimeEventListener{
 					}
 				}
 				temp.setPriority(OrderPriority.NORMAL);
-				this.orderObservable.addOrder(temp);
 				temp.getTimer().start();
+				this.orderObservable.addOrder(temp);
 				arg0.getKieRuntime().update(handler, temp);
 			}
 		}

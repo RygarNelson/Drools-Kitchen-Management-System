@@ -3,6 +3,7 @@ package com.bin
 
 //list any import classes here.
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
 
 
 //declare any global variables here
@@ -15,7 +16,21 @@ rule "PrintAllWaiters"
 		System.out.println("Waiter: " + waiter.toString());
 end
 
-rule "RemoveWaiterWhenOrderIsCompleted"
+rule "TimerExpired"
+	when
+		order: Order(timer.expired == true)
+	then
+		if(order.getPriority() == OrderPriority.HIGH){
+			System.out.println("Timer of order "+order.getID()+" has been expired and the priority has already been set to "+order.getPriority());
+		} else {
+			if(order.getStatus() != OrderStatus.COMPLETED){
+				order.setPriority(OrderPriority.HIGH);
+				System.out.println("Timer of order "+order.getID()+" has been expired and the priority has been set to "+order.getPriority());
+			}
+		}
+end
+
+rule "RemoveWaiterWhenOrderIsCompleted(LOCAL)"
 	when
 		waiter: Waiter(!isAvailable())
 		order: Order(getWaiterID() == waiter.getWaiterID() && status == OrderStatus.COMPLETED && type == OrderType.LOCAL)
@@ -33,7 +48,7 @@ rule "DeleteOrderOnCompletition"
 		retract(order);
 end
 
-rule "AssignOrderToWaiter"
+rule "AssignOrderToWaiter(LOCAL)"
 	when
 		waiter: Waiter(isAvailable())
 		order: Order(getWaiterID() == waiter.getWaiterID() && status != OrderStatus.COMPLETED && type == OrderType.LOCAL)
@@ -43,7 +58,7 @@ rule "AssignOrderToWaiter"
 		update(waiter);
 end
 
-rule "AssignWaiterToOrder"
+rule "AssignWaiterToOrder(LOCAL)"
 	when
 		order: Order(getWaiterID() == -1 && getStatus() != OrderStatus.COMPLETED && type == OrderType.LOCAL)
 		waiter : Waiter(isAvailable())
@@ -63,21 +78,19 @@ rule "PrintAllOrders"
 
 end
 
-rule "TimerExpired"
+
+rule "CompleteOrder(DELIVERY,TAKEAWAY)"
 	when
-		order: Order(timer.expired == true)
+		order: Order(type == OrderType.DELIVERY || type == OrderType.TAKEAWAY)
 	then
-		if(order.getPriority() == OrderPriority.HIGH){
-			System.out.println("Timer of order "+order.getID()+" has been expired and the priority has already been set to "+order.getPriority());
-		} else {
-			if(order.getStatus() != OrderStatus.COMPLETED){
-				order.setPriority(OrderPriority.HIGH);
-				System.out.println("Timer of order "+order.getID()+" has been expired and the priority has been set to "+order.getPriority());
-			}
-		}
+		Random random = new Random();
+		//int time = random.nextInt(maxRandomTime*3);
+		int time = 5000;
+		order.runAsyncTaskDeliveryTakeway(time, order);
+		
 end
 
-rule "ChangeStatus"
+rule "ChangeStatus(LOCAL)"
 	when
 		//If I don't have a waiter associated to the order, I will not change his status
 		order : Order(waiterID != -1 && type == OrderType.LOCAL)
@@ -139,3 +152,4 @@ rule "ChangeStatus"
 			}
 		}
 end
+
