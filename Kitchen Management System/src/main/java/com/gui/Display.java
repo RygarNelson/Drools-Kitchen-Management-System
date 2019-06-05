@@ -2,6 +2,8 @@ package com.gui;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
@@ -20,12 +22,17 @@ public class Display extends JFrame implements Observer{
 	private JPanel displayPanel;
 	private ArrayList<Order> orderList;
 	private JPanel kitchenPanel;
+	private JPanel barPanel;
+	private JPanel grillPanel;
 	private JFrame displayFrame;
 	
 	public Display() {
 		this.orderList = new ArrayList<Order>();
 		this.displayFrame = new JFrame();
+		this.displayPanel = new JPanel(new GridLayout(0,1));
 		this.kitchenPanel = new JPanel(new GridLayout(0,1));
+		this.barPanel = new JPanel(new GridLayout(0,1));
+		this.grillPanel = new JPanel(new GridLayout(0,1));
 		this.init();
 	}
 	
@@ -35,22 +42,43 @@ public class Display extends JFrame implements Observer{
 		displayFrame.setDefaultCloseOperation(3);
 		DynamicFramePosition.setLocationToBottom(displayFrame);
 		displayFrame.setVisible(true);
-	    //this.createPanel();
+	    this.createPanel();
 		this.setFields();
-	    this.displayFrame.setContentPane(kitchenPanel);
+	    this.displayFrame.setContentPane(displayPanel);
 	    
 		//displayFrame.setContentPane(this.displayPanel);
 	}
 	
 	public void createPanel() {
-		this.displayPanel = new JPanel(new GridLayout(0,1));
 		JButton goToKitchen = new JButton("KITCHEN");
 		JButton goToBar = new JButton("BAR");
 		JButton goToGrill = new JButton("GRILL");
-		displayPanel.add(goToBar);
-		displayPanel.add(goToKitchen);
-		displayPanel.add(goToGrill);
-		//this.displayFrame.add(displayPanel);
+		goToKitchen.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setContentPane(kitchenPanel);
+				setVisible(true);
+			}
+		});
+		goToBar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setContentPane(barPanel);
+				setVisible(true);
+				
+			}
+		});
+		goToGrill.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setContentPane(grillPanel);
+				setVisible(true);
+				
+			}
+		});
+		this.displayPanel.add(goToBar);
+		this.displayPanel.add(goToKitchen);
+		this.displayPanel.add(goToGrill);
 	}
 	
 	
@@ -79,6 +107,8 @@ public class Display extends JFrame implements Observer{
 	public void displayKitchen() {
 		this.kitchenPanel.setVisible(false);
 		this.kitchenPanel.removeAll();
+		JButton ret = new JButton("return");
+		kitchenPanel.add(ret);
 		for(Order order : this.orderList) {
 			if(order.getStatus().equals(OrderStatus.FIRST_COURSE)){
 				JLabel firstCourse = new JLabel("<html>"+
@@ -103,36 +133,52 @@ public class Display extends JFrame implements Observer{
 
 	}
 	public void displayBar() {
-		JPanel barPanel = new JPanel(new GridLayout(0,1));
+		this.barPanel.setVisible(false);
+		this.barPanel.removeAll();
+		JButton ret = new JButton("return");
+		barPanel.add(ret);
 		for(Order order : this.orderList) {
-			JLabel orderLabel = new JLabel("<html>"+
-					"ID: "+order.getID() +"<br/>"+
-					"Type: "+order.getType() +"<br/>"+
-					"Waiter ID: "+order.getWaiterID() +"<br/>"+
-					"Priority: "+order.getPriority() +"<br/>"+
-					"Status: "+order.getStatus() +"<br/>"+
-					"Drinks: "+order.getDrink()+"<br/>"+
-					"</html>"
-			);
-			barPanel.add(orderLabel);
+			if(order.getStatus().equals(OrderStatus.DRINKS)){
+				JLabel drink = new JLabel("<html>"+
+						"ID: "+order.getID() +"<br/>"+
+						"Priority: "+order.getPriority() +"<br/>"+
+						"Drink: "+order.getDrink()+"<br/>"+
+						"</html>"
+				);
+				this.barPanel.add(drink);
+			} else if(order.getStatus().equals(OrderStatus.DESSERT)) {
+				JLabel dessert = new JLabel("<html>"+
+						"ID: "+order.getID() +"<br/>"+
+						"Priority: "+order.getPriority() +"<br/>"+
+						"Dessert: "+order.getDessert()+"<br/>"+
+						"</html>"
+				);
+				this.barPanel.add(dessert);
+			}
 		}
-		barPanel.revalidate();
+		this.barPanel.revalidate();
+		this.barPanel.setVisible(true);
+
 	}
 	public void displayGrill() {
-		JPanel grillPanel = new JPanel(new GridLayout(0,1));
+		this.grillPanel.setVisible(false);
+		this.grillPanel.removeAll();
+		JButton ret = new JButton("return");
+		grillPanel.add(ret);
 		for(Order order : this.orderList) {
-			JLabel orderLabel = new JLabel("<html>"+
-					"ID: "+order.getID() +"<br/>"+
-					"Type: "+order.getType() +"<br/>"+
-					"Waiter ID: "+order.getWaiterID() +"<br/>"+
-					"Priority: "+order.getPriority() +"<br/>"+
-					"Status: "+order.getStatus() +"<br/>"+
-					"Second Course: "+order.getSecondCourse()+"<br/>"+
-					"</html>"
-			);
-			//this.orderPanel.add(orderLabel);
+			if(order.getStatus().equals(OrderStatus.SECOND_COURSE)){
+				JLabel secondCourse = new JLabel("<html>"+
+						"ID: "+order.getID() +"<br/>"+
+						"Priority: "+order.getPriority() +"<br/>"+
+						"Second Course: "+order.getSecondCourse()+"<br/>"+
+						"</html>"
+				);
+				this.grillPanel.add(secondCourse);
+			}
 		}
-		//this.orderPanel.revalidate();
+		this.grillPanel.revalidate();
+		this.grillPanel.setVisible(true);
+
 	}
 	}
 	
