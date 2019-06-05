@@ -11,17 +11,18 @@ import java.util.Date;
 public class Printer {
 	
 	static void printToFile(Order o) {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMddhhmmss");
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMdd");
 		String dateAsString = simpleDateFormat.format(new Date());
 		try {
 			File f;
 			f = new File("src/main/java/com/log/", dateAsString + ".txt");
 			f.createNewFile();
 			
-			FileWriter filetowrite = new FileWriter(f);
+			FileWriter filetowrite = new FileWriter(f, true);
 			BufferedWriter bw = new BufferedWriter(filetowrite);
 			
 			bw.write(o.toString());
+			bw.newLine();
 			bw.flush();
 			bw.close();
 			
