@@ -6,6 +6,7 @@ import org.kie.api.event.rule.ObjectUpdatedEvent;
 import org.kie.api.event.rule.RuleRuntimeEventListener;
 import org.kie.api.runtime.rule.FactHandle;
 
+import com.gui.Display;
 import com.main.Gui;
 
 public class EventListener implements RuleRuntimeEventListener{
@@ -15,6 +16,7 @@ public class EventListener implements RuleRuntimeEventListener{
 	public EventListener(Gui frame) {
 		this.orderObservable = new OrderObservable();
 		this.orderObservable.addObserver(frame.getOrderStatusFrame());
+		this.orderObservable.addObserver(frame.getDisplayFrame());
 	}
 	
 	@Override
