@@ -1,6 +1,8 @@
 package com.gui;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
@@ -11,15 +13,16 @@ import javax.swing.*;
 import com.bin.Order;
 
 public class OrderStatus implements Observer {
-	
 	private ArrayList<Order> orderList;
 	private JPanel orderPanel;
 	private int lastOrderChanged = -1;
+	
 	
 	public OrderStatus() {
 		this.orderList = new ArrayList<Order>();
 		this.orderPanel = new JPanel(new GridLayout(0,2));
 		this.orderPanel.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
+		
 		this.init();
 	}
 	
@@ -40,13 +43,43 @@ public class OrderStatus implements Observer {
 	
 	private void init() {
 		JFrame frame = new JFrame();
-		frame.setTitle("Order Status");
-		frame.setSize(800,600);
-		frame.setDefaultCloseOperation(3);
-		DynamicFramePosition.setLocationToRight(frame);
-	    frame.setVisible(true);
-		this.writeOrders();
-		frame.setContentPane(this.orderPanel);
+		frame.setTitle("Password Required");
+		JTextField pass = new JTextField();
+		pass.setBounds(100,75,80,30);  
+		JLabel l1=new JLabel("Password:");  
+		l1.setBounds(20,75, 80,30);           
+        frame.add(pass);  
+        frame.add(l1);  
+        frame.setSize(300,300);    
+        frame.setLayout(null);    
+        frame.setVisible(true);
+        JButton login = new JButton("login");
+        login.setBounds(100,120, 80,30);
+        frame.add(login);
+        
+        login.addActionListener(new ActionListener() {
+			
+			String required = "admin";
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String inserted = pass.getText();
+				if(inserted.equals(required)) {
+					frame.setTitle("Order Status");
+					frame.setSize(800,600);
+					frame.setDefaultCloseOperation(3);
+					DynamicFramePosition.setLocationToRight(frame);
+				    frame.setVisible(true);
+					writeOrders();
+					frame.setContentPane(orderPanel);
+				}
+				else {
+					System.out.println(inserted);
+					System.out.println(required);
+				}
+				
+			}
+		});
+        
 	}
 	
 	private void writeOrders() {
