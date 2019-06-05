@@ -48,6 +48,7 @@ public class OrderStatus implements Observer {
 	}
 	
 	private void writeOrders() {
+		this.orderPanel.setVisible(false);
 		this.orderPanel.removeAll();
 		for(Order order : this.orderList) {
 			JLabel orderLabel = new JLabel("<html>"+
@@ -66,6 +67,7 @@ public class OrderStatus implements Observer {
 			this.orderPanel.add(orderLabel);
 		}
 		this.orderPanel.revalidate();
+		this.orderPanel.setVisible(true);
 	}
 
 }

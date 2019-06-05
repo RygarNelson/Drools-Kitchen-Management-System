@@ -49,6 +49,7 @@ public class NewOrder extends JFrame{
 		
 		JLabel drinkL = new JLabel("Drink");
 		JComboBox drinkB = new JComboBox();
+		drinkB.addItem("-");
 	    drinkB.addItem("Water");
 	    drinkB.addItem("Wine");
 	    drinkB.addItem("Coca Cola");
@@ -59,6 +60,7 @@ public class NewOrder extends JFrame{
 	    
 	    JLabel starterL = new JLabel("Starter");
 		JComboBox starterB = new JComboBox();
+		starterB.addItem("-");
 		starterB.addItem("Mix");
 		starterB.addItem("Ham");
 		starterB.addItem("Grilled cheese");
@@ -68,6 +70,7 @@ public class NewOrder extends JFrame{
 	    
 		JLabel firstCourseL = new JLabel("First Course");
 		JComboBox firstCourseB = new JComboBox();
+		firstCourseB.addItem("-");
 		firstCourseB.addItem("Spaghetti");
 		firstCourseB.addItem("Tortellini");
 		firstCourseB.addItem("Lasagna");
@@ -77,6 +80,7 @@ public class NewOrder extends JFrame{
 	    
 	    JLabel secondCourseL = new JLabel("Second Course");
 		JComboBox secondCourseB = new JComboBox();
+		secondCourseB.addItem("-");
 		secondCourseB.addItem("Fish 'n Chips");
 		secondCourseB.addItem("Chicken");
 		secondCourseB.addItem("Pulled pork");
@@ -86,6 +90,7 @@ public class NewOrder extends JFrame{
 	    
 	    JLabel dessertL = new JLabel("Dessert");
 		JComboBox dessertB = new JComboBox();
+		dessertB.addItem("-");
 		dessertB.addItem("Apple pie");
 		dessertB.addItem("Carrot pie");
 		dessertB.addItem("Ice cream");

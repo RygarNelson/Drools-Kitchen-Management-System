@@ -31,6 +31,7 @@ rule "DeleteOrderOnCompletition"
 	when
 		order : Order(status == OrderStatus.COMPLETED)
 	then
+		order.getTimer().stop();
 		retract(order);
 end
 
@@ -59,10 +60,9 @@ end
 
 rule "ChangeStatus"
 	when
-	
-		order : Order()
+		//If I don't have a waiter associated to the order, I will not change his status
+		order : Order(waiterID != -1)
 	then
-
 		Random random = new Random();
 		//int time = random.nextInt(maxRandomTime);
 		int time = 2000;
@@ -76,34 +76,44 @@ rule "ChangeStatus"
 		//Change status
 		switch(order.getStatus()){
 			case ORDERED:{
-				order.setStatus(OrderStatus.DRINKS);
-				order.setWaiterID(-1);
-				update(order);
-				break;
+				if(!(order.getDrink().getContent().equals("-"))){
+					order.setStatus(OrderStatus.DRINKS);
+					order.setWaiterID(-1);
+					update(order);
+					break;
+				}
 			}
 			case DRINKS:{
-				order.setStatus(OrderStatus.STARTER);
-				order.setWaiterID(-1);
-				update(order);
-				break;
+				if(!(order.getStarter().getContent().equals("-"))){
+					order.setStatus(OrderStatus.STARTER);
+					order.setWaiterID(-1);
+					update(order);
+					break;
+				}
 			}
 			case STARTER:{
-				order.setStatus(OrderStatus.FIRST_COURSE);
-				order.setWaiterID(-1);
-				update(order);
-				break;
+				if(!(order.getFirstCourse().getContent().equals("-"))){
+					order.setStatus(OrderStatus.FIRST_COURSE);
+					order.setWaiterID(-1);
+					update(order);
+					break;
+				}
 			}
 			case FIRST_COURSE:{
-				order.setStatus(OrderStatus.SECOND_COURSE);
-				order.setWaiterID(-1);
-				update(order);
-				break;
+				if(!(order.getSecondCourse().getContent().equals("-"))){
+					order.setStatus(OrderStatus.SECOND_COURSE);
+					order.setWaiterID(-1);
+					update(order);
+					break;
+				}
 			}
 			case SECOND_COURSE:{
-				order.setStatus(OrderStatus.DESSERT);
-				order.setWaiterID(-1);
-				update(order);
-				break;
+				if(!(order.getDessert().getContent().equals("-"))){
+					order.setStatus(OrderStatus.DESSERT);
+					order.setWaiterID(-1);
+					update(order);
+					break;
+				}
 			}
 			case DESSERT:{
 				order.setStatus(OrderStatus.COMPLETED);
