@@ -95,7 +95,6 @@ public class Display extends JFrame implements Observer{
 			this.orderList.remove(map.get(3));
 		}
 		this.setFields();
-		System.out.println(this.orderList);
 	}
 	
 	public void setFields() {

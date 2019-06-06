@@ -28,6 +28,10 @@ public class Timer{
 	public void setTimeExpected(long timeExpected) {
 		this.timeExpected = timeExpected;
 	}
+	
+	public long getTime() {
+		return this.stopwatch.getTime();
+	}
 
 	public int getOrderID() {
 		return orderID;
@@ -41,29 +45,34 @@ public class Timer{
 		return this.stopwatch.isExpired();
 	}
 	
+	@Override
+	public String toString() {
+		return "Timer [orderID=" + orderID + ", timeExpected=" + timeExpected + ", time=" + stopwatch.getTime() + "]";
+	}
+
+
+
 	private class StopWatch implements Runnable{
 		private long start;
 		private boolean expired = false;
 		private boolean stop = false;
+		private long time;
 		
 		public void run(){
 			this.start = System.currentTimeMillis();
-			while(!stop && (System.currentTimeMillis() - this.start < timeExpected)) {
-				//I do nothing
-			}
-			if(this.stop) {
-				this.stop = true;
-			} else {
-				this.expired = true;
+			while(!stop) {
+				if(System.currentTimeMillis() - this.start > timeExpected) {
+					this.expired = true;
+				}
+				if(this.stop) {
+					this.stop = true;
+				}
+				this.time = System.currentTimeMillis() - this.start;
 			}
 		}
 		
 		public void stop() {
-			if(this.expired) {
-				//I do nothing
-			} else {
-				this.stop = true;
-			}
+			this.stop = true;
 		}
 		
 		public boolean isStopped() {
@@ -72,6 +81,10 @@ public class Timer{
 		
 		public boolean isExpired() {
 			return expired;
+		}
+		
+		public long getTime() {
+			return this.time;
 		}
 	}
 }
