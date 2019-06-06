@@ -3,6 +3,9 @@ package com.gui;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
@@ -16,6 +19,7 @@ public class OrderStatus implements Observer {
 	private ArrayList<Order> orderList;
 	private JPanel orderPanel;
 	private int lastOrderChanged = -1;
+	private String required = "admin";
 	
 	
 	public OrderStatus() {
@@ -58,30 +62,59 @@ public class OrderStatus implements Observer {
         login.setBounds(100,120, 80,30);
         frame.add(login);
         
-        login.addActionListener(new ActionListener() {
+		pass.addKeyListener(new KeyListener() {
 			
-			String required = "admin";
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getKeyCode() == 10) {
+					char[] passChar = pass.getPassword();
+		    		String inserted = new String(passChar);
+		    		
+		    		LoginAction(frame, inserted);
+				}
+			}
+		});
+		
+        login.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				char[] passChar = pass.getPassword();
-				String inserted = new String(passChar);
-				if(inserted.equals(required)) {
-					frame.setTitle("Order Status");
-					frame.setSize(800,600);
-					frame.setDefaultCloseOperation(3);
-					DynamicFramePosition.setLocationToRight(frame);
-				    frame.setVisible(true);
-					writeOrders();
-					frame.setContentPane(orderPanel);
-				}
-				else {
-					System.out.println(inserted);
-					System.out.println(required);
-				}
-				
+	    		String inserted = new String(passChar);
+	    		
+	    		LoginAction(frame, inserted);
 			}
 		});
         
+	}
+	
+	private void LoginAction(JFrame frame, String inserted) {
+		if(inserted.equals(required)) {
+			frame.setTitle("Order Status");
+			frame.setSize(800,600);
+			frame.setDefaultCloseOperation(3);
+			DynamicFramePosition.setLocationToRight(frame);
+		    frame.setVisible(true);
+			writeOrders();
+			frame.setContentPane(orderPanel);
+		}
+		else {
+			System.out.println(inserted);
+			System.out.println(required);
+		}
 	}
 	
 	private void writeOrders() {
