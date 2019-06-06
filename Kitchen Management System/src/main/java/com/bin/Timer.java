@@ -60,18 +60,18 @@ public class Timer{
 		
 		public void run(){
 			this.start = System.currentTimeMillis();
-			while(!stop) {
-				if(System.currentTimeMillis() - this.start > timeExpected) {
-					this.expired = true;
-				}
-				if(this.stop) {
-					this.stop = true;
-				}
-				this.time = System.currentTimeMillis() - this.start;
+			while(!stop && (System.currentTimeMillis() - this.start < timeExpected)) {
+				//I do nothing
+			}
+			if(this.stop) {
+				this.stop = true;
+			} else {
+				this.expired = true;
 			}
 		}
 		
 		public void stop() {
+			this.time = System.currentTimeMillis() - this.start;
 			this.stop = true;
 		}
 		

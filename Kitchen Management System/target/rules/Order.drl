@@ -86,7 +86,7 @@ rule "CompleteOrder(DELIVERY,TAKEAWAY)"
 	then
 		Random random = new Random();
 		//int time = random.nextInt(maxRandomTime*3);
-		int time = 5000;
+		int time = 1000;
 		order.runAsyncTaskDeliveryTakeway(time, order);
 		
 end
