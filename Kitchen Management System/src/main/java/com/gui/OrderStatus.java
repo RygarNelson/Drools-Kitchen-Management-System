@@ -44,7 +44,8 @@ public class OrderStatus implements Observer {
 	private void init() {
 		JFrame frame = new JFrame();
 		frame.setTitle("Password Required");
-		JTextField pass = new JTextField();
+		frame.setDefaultCloseOperation(3);
+		JPasswordField pass = new JPasswordField();
 		pass.setBounds(100,75,80,30);  
 		JLabel l1=new JLabel("Password:");  
 		l1.setBounds(20,75, 80,30);           
@@ -62,7 +63,8 @@ public class OrderStatus implements Observer {
 			String required = "admin";
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String inserted = pass.getText();
+				char[] passChar = pass.getPassword();
+				String inserted = new String(passChar);
 				if(inserted.equals(required)) {
 					frame.setTitle("Order Status");
 					frame.setSize(800,600);
