@@ -8,6 +8,7 @@ import java.util.concurrent.CompletableFuture;
 
 //declare any global variables here
 global Integer maxRandomTime;
+global Integer highPriorityTime;
 
 rule "PrintAllWaiters"
 	when
@@ -85,8 +86,7 @@ rule "CompleteOrder(DELIVERY,TAKEAWAY)"
 		order: Order(type == OrderType.DELIVERY || type == OrderType.TAKEAWAY)
 	then
 		Random random = new Random();
-		//int time = random.nextInt(maxRandomTime*3);
-		int time = 1000;
+		int time = random.nextInt(maxRandomTime*3);
 		order.runAsyncTaskDeliveryTakeway(time, order);
 		
 end
@@ -97,8 +97,12 @@ rule "ChangeStatus(LOCAL)"
 		order : Order(waiterID != -1 && type == OrderType.LOCAL)
 	then
 		Random random = new Random();
-		//int time = random.nextInt(maxRandomTime);
-		int time = 2000;
+		int time = 0;
+		if(order.getPriority().equals(OrderPriority.HIGH)){
+			time = random.nextInt(maxRandomTime-highPriorityTime);
+		} else {
+			time = random.nextInt(maxRandomTime);
+		}
 		long start = System.currentTimeMillis();
 		
 		//Wait
