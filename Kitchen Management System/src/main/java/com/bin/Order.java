@@ -126,6 +126,7 @@ public class Order {
 				
 				order.setStatus(OrderStatus.COMPLETED);
 				kSession.update(kSession.getFactHandle(order), order);
+				kSession.fireAllRules();
 		});
 	}
 	
@@ -137,7 +138,7 @@ public class Order {
 	public String toString() {
 		return "Order [ID=" + ID + ", type=" + type + ", status=" + status + ", priority=" + priority + ", starter="
 				+ starter + ", firstCourse=" + firstCourse + ", secondCourse=" + secondCourse + ", dessert=" + dessert
-				+ ", drink=" + drink +", waiter="+ waiterID+"]";
+				+ ", drink=" + drink +", waiter="+ waiterID + ", timer=" + timer + "]";
 	}
 	
 }
