@@ -16,6 +16,7 @@ import com.bin.Dessert;
 import com.bin.Drink;
 import com.bin.FirstCourse;
 import com.bin.Order;
+import com.bin.OrderAverage;
 import com.bin.OrderStatus;
 import com.bin.OrderType;
 import com.bin.SecondCourse;
@@ -25,8 +26,10 @@ public class NewOrder extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
 	private KieSession kc;
+	private OrderAverage orderAverage;
 	
 	public NewOrder(KieSession kSession) {
+		this.orderAverage = new OrderAverage(kSession);
 		this.kc = kSession;
 		this.init();
 	}
@@ -109,7 +112,8 @@ public class NewOrder extends JFrame{
 					new SecondCourse(id, secondCourseB.getSelectedItem().toString()), 
 					new Dessert(id, dessertB.getSelectedItem().toString()),
 					new Drink(id, drinkB.getSelectedItem().toString()),
-					kc
+					kc,
+					orderAverage
 				);
             	//CompletableFuture.runAsync(() -> JOptionPane.showMessageDialog(null, "Item inserted correctly"));
             	FactHandle w1 = kc.insert(order);

@@ -18,9 +18,10 @@ public class Order {
 	private Timer timer;
 	private int waiterID;
 	private KieSession kSession;
+	private OrderAverage orderAverage;
 	
 	public Order(int id, OrderType type, OrderStatus status, Starter starter, FirstCourse firstCourse,
-			SecondCourse secondCourse, Dessert dessert, Drink drink, KieSession kSession) {
+			SecondCourse secondCourse, Dessert dessert, Drink drink, KieSession kSession, OrderAverage orderAverage) {
 		this.ID = id;
 		this.type = type;
 		this.status = status;
@@ -32,6 +33,7 @@ public class Order {
 		this.timer = new Timer(id);
 		this.waiterID = -1;
 		this.kSession = kSession;
+		this.orderAverage = orderAverage;
 	}
 
 	public OrderStatus getStatus() {
@@ -132,6 +134,10 @@ public class Order {
 	
 	public void WriteLog(Order o) {
 		Printer.printToFile(o);
+	}
+	
+	public void storeCompleted(Order order) {
+		this.orderAverage.addCompleted(order);
 	}
 
 	@Override
