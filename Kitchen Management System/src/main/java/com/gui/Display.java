@@ -4,6 +4,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
@@ -57,23 +59,56 @@ public class Display extends JFrame implements Observer{
 		goToKitchen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setContentPane(kitchenPanel);
-				setVisible(true);
+				JFrame jf = new JFrame();
+				jf.setTitle("Kitchen panel");
+				jf.setSize(400,500);
+				DynamicFramePosition.setLocationToBottom(jf);
+				jf.setVisible(true);
+				jf.setContentPane(kitchenPanel);
+				jf.setVisible(true);
+				goToKitchen.setEnabled(false);
+				jf.addWindowListener(new WindowAdapter() {
+				  public void windowClosing(WindowEvent e) {
+					  goToKitchen.setEnabled(true);
+				  }
+				});
 			}
 		});
 		goToBar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setContentPane(barPanel);
-				setVisible(true);
+				JFrame jf = new JFrame();
+				jf.setTitle("Bar panel");
+				jf.setSize(400,500);
+				DynamicFramePosition.setLocationToBottom(jf);
+				jf.setVisible(true);
+				jf.setContentPane(barPanel);
+				jf.setVisible(true);
+				goToBar.setEnabled(false);
+				jf.addWindowListener(new WindowAdapter() {
+				  public void windowClosing(WindowEvent e) {
+					  goToBar.setEnabled(true);
+				  }
+				});
 				
 			}
 		});
 		goToGrill.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setContentPane(grillPanel);
-				setVisible(true);
+				JFrame jf = new JFrame();
+				jf.setTitle("Grill panel");
+				jf.setSize(400,500);
+				DynamicFramePosition.setLocationToBottom(jf);
+				jf.setVisible(true);
+				jf.setContentPane(grillPanel);
+				jf.setVisible(true);
+				goToGrill.setEnabled(false);
+				jf.addWindowListener(new WindowAdapter() {
+				  public void windowClosing(WindowEvent e) {
+					  goToGrill.setEnabled(true);
+				  }
+				});
 				
 			}
 		});
