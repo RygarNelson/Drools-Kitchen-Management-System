@@ -28,6 +28,10 @@ public class OrderAverage {
 			kSession.insert(this);
 		}
 	}
+	
+	public void writeAverage() {
+		Printer.printAvg(this.orderAverage);
+	}
 
 	public int getOrderAverage() {
 		return orderAverage;

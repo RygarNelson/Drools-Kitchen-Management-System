@@ -15,6 +15,7 @@ rule "CalculateAverageTime"
 		orderAverage: OrderAverage(orderAverage > 0)
 	then
 		System.out.println("The average time for an order to be completed is: "+orderAverage.getOrderAverage());
+		orderAverage.writeAverage();
 		orderAverage.reset();
 		retract(orderAverage);
 end

@@ -31,5 +31,27 @@ public class Printer {
 			e.printStackTrace();
 		}
 	}
+	static void printAvg(int o) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
+		String dateAsString = simpleDateFormat.format(new Date());
+		String averageString = dateAsString + " : " + o;
+		try {
+			File f;
+			f = new File("src/main/java/com/log/", "Average" + ".txt");
+			f.createNewFile();
+			
+			FileWriter filetowrite = new FileWriter(f, true);
+			BufferedWriter bw = new BufferedWriter(filetowrite);
+			
+			bw.write(averageString);
+			bw.newLine();
+			bw.flush();
+			bw.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }
