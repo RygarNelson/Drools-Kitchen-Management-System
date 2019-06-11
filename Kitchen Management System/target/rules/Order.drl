@@ -9,6 +9,7 @@ import java.util.concurrent.CompletableFuture;
 //declare any global variables here
 global Integer maxRandomTime;
 global Integer highPriorityTime;
+global Integer minimumRandomGeneratorTime;
 
 rule "CalculateAverageTime"
 	when

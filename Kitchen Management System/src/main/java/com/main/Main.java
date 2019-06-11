@@ -19,8 +19,9 @@ public class Main {
     	    KieContainer kContainer = ks.getKieClasspathContainer();
         	KieSession kSession = kContainer.newKieSession("ksession-rules");
         	
-        	kSession.setGlobal("maxRandomTime", 2000);
-        	kSession.setGlobal("highPriorityTime", 700);
+        	kSession.setGlobal("maxRandomTime", 7000);
+        	kSession.setGlobal("highPriorityTime", 2500);
+        	kSession.setGlobal("minimumRandomGeneratorTime", 3000);
         	
     		Gui frame = new Gui(kSession);
     	    

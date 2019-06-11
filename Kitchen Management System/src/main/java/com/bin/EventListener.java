@@ -45,17 +45,17 @@ public class EventListener implements RuleRuntimeEventListener{
 				switch(temp.getType()) {
 					case LOCAL:{
 						//3
-						temp.getTimer().setTimeExpected(3000);
+						temp.getTimer().setTimeExpected(10000);
 						break;
 					}
 					case TAKEAWAY:{
 						//5
-						temp.getTimer().setTimeExpected(5000);
+						temp.getTimer().setTimeExpected(15000);
 						break;
 					}
 					case DELIVERY:{
 						//10
-						temp.getTimer().setTimeExpected(10000);
+						temp.getTimer().setTimeExpected(20000);
 						break;
 					}
 				}
